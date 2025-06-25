@@ -1,4 +1,7 @@
-export type Guardian = {
+import { Document, Model } from "mongoose";
+
+
+export type TGuardian = {
   fatherName: string;
   fatherOccupation: string;
   fatherContactNo: string;
@@ -6,13 +9,13 @@ export type Guardian = {
   motherOccupation: string;
   motherContactNo: string;
 };
-export type UserName = {
+export type TUserName = {
   firstName: string;
   middleName: string;
   lastName: string;
 };
 
-export type LocalGuardian = {
+export type TLocalGuardian = {
   name: string;
   occupation: string;
   contactNo: string;
@@ -20,8 +23,9 @@ export type LocalGuardian = {
 };
 
 export type TStudent = {
-  id: string;
-  name: UserName;
+  studentId: string;
+  password: string;
+  name: TUserName;
   gender: "male" | "female" | "other";
   dateOfBirth: string;
   email: string;
@@ -30,8 +34,21 @@ export type TStudent = {
   bloodGroup?: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
   presentAddress: string;
   permanentAddress: string;
-  guardian: Guardian;
-  localGuardian: LocalGuardian;
+  guardian: TGuardian;
+  localGuardian: TLocalGuardian;
   profileImg?: string;
   isActive: "active" | "blocked";
+  isDeleted: boolean
 };
+
+// export interface IStudentDocument extends Omit<TStudent, "id">, Document {}
+// I can solve the problem by renaming the TStudent's "id" like studentId
+
+export interface IStudentDocument extends TStudent, Document {
+  getFullName(): string;
+}
+
+export interface IStudentModel extends Model<IStudentDocument> {
+  isEmailTaken(email: string): Promise<IStudentDocument | null>;
+  
+}
