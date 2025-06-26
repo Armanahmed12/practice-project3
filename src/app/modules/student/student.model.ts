@@ -150,32 +150,28 @@ studentSchema.post("save", function (doc) {
   doc.password = "";
 });
 
-// adding virtual filed 
-studentSchema.virtual('fullName').get(function () {
+// adding virtual filed
+studentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
 });
 
 // ==================== Query middleware
 
+studentSchema.pre("find", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  //  console.log(this, "wanna see the this")
+  next();
+});
+studentSchema.pre("findOne", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  //  console.log(this, "wanna see the this")
+  next();
+});
 
-studentSchema.pre('find', function (next) {
-  
-    this.find({ isDeleted: {$ne: true} })
-    //  console.log(this, "wanna see the this")
-     next()
-})
-studentSchema.pre('findOne', function (next) {
-  
-    this.find({ isDeleted: {$ne: true} })
-    //  console.log(this, "wanna see the this")
-     next()
-})
-
-studentSchema.pre('aggregate', function (next) {
-  
+studentSchema.pre("aggregate", function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-  next()
-})
+  next();
+});
 
 // 3. Create a Model.
 export const StudentModel = model<IStudentDocument, IStudentModel>(

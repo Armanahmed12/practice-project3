@@ -1,6 +1,5 @@
 import { Document, Model } from "mongoose";
 
-
 export type TGuardian = {
   fatherName: string;
   fatherOccupation: string;
@@ -38,7 +37,7 @@ export type TStudent = {
   localGuardian: TLocalGuardian;
   profileImg?: string;
   isActive: "active" | "blocked";
-  isDeleted: boolean
+  isDeleted: boolean;
 };
 
 // export interface IStudentDocument extends Omit<TStudent, "id">, Document {}
@@ -50,5 +49,4 @@ export interface IStudentDocument extends TStudent, Document {
 
 export interface IStudentModel extends Model<IStudentDocument> {
   isEmailTaken(email: string): Promise<IStudentDocument | null>;
-  
 }

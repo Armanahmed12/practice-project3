@@ -56,8 +56,7 @@ const userNameSchema = Joi.object({
       "string.empty": "First name is required.",
     }),
   middleName: Joi.string().required().trim().pattern(nameOnlyRegex).messages({
-    "string.pattern.base":
-      "MiddleName must contain only letters.",
+    "string.pattern.base": "MiddleName must contain only letters.",
     "string.empty": "First name is required.",
   }),
   lastName: Joi.string().trim().pattern(nameOnlyRegex).required().messages({

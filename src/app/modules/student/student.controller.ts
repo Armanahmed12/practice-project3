@@ -36,20 +36,21 @@ const createStudent = async (req: Request, res: Response) => {
     // ✅ Cast result.data to TStudent
     // const validatedStudent: TStudentByZod = result.data;
 
-      const createdStudent : TStudent =
-      await StudentServices.createStudentIntoDB(result.data);
-    
+    const createdStudent: TStudent = await StudentServices.createStudentIntoDB(
+      result.data
+    );
+
     res.status(200).json({
       success: true,
       message: "Student is created successfully.",
       data: createdStudent,
     });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     res.status(500).json({
       success: false,
-      message:  error.message ||"Something went wrong Bro!.",
+      message: error.message || "Something went wrong Bro!.",
       err: error,
     });
   }
@@ -65,10 +66,10 @@ const getAllStudents = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({
-           success: false,
-           message: "Something went wrong!.",
-           err: error
-        });
+      success: false,
+      message: "Something went wrong!.",
+      err: error,
+    });
   }
 };
 
@@ -92,24 +93,22 @@ const getOneStudentById = async (req: Request, res: Response) => {
 };
 
 const deleteStudentById = async (req: Request, res: Response) => {
-  
-       try {
-        
-         const updatedData = await StudentServices.deleteDocFromDB(req.params.studentId);
-         res.status(200).json({
-           success: true,
-           message: "Student has been deleted successfully.",
-           modifiedData: updatedData,
-         });
-         
-       } catch (error) {
-           
-         res.status(500).json({
-           success: false,
-           message: "Something went wrong!.",
-           err: error,
-         });
-       }
+  try {
+    const updatedData = await StudentServices.deleteDocFromDB(
+      req.params.studentId
+    );
+    res.status(200).json({
+      success: true,
+      message: "Student has been deleted successfully.",
+      modifiedData: updatedData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!.",
+      err: error,
+    });
+  }
 };
 
 export const StudentControllers = {
