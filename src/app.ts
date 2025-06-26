@@ -11,7 +11,7 @@ app.use("/api/v1/students", StudentsRoutes);
 
 // default router
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.send("Hello WORLD!");
 });
 
 export default app;
